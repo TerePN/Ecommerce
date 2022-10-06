@@ -11,7 +11,7 @@ const MyNavBar = () => {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/login">Login</Nav.Link>
             <Nav.Link as={Link} to="/purchases">Purchases</Nav.Link>
-            <Nav.Link >Product</Nav.Link>
+            <Nav.Link as={Link} to="/productsItems/:id">Products</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

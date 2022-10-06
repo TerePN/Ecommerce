@@ -2,16 +2,21 @@ import axios from "axios";
 import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
+
+  const navigate=useNavigate();
 
   const submit = (data) => {
     console.log(data);
     axios
       .post("https://ecommerce-api-react.herokuapp.com/api/v1/users/login", data)
-      
-      .then(() => alert("Usuario loggeado"))
+      .then((res) => {
+        localStorage.setItem("token", res.data.data.token);
+        navigate("/");
+      })
       .catch((error) => {
         if (error.response?.status === 404) {
           alert("Credenciales inválidas");
