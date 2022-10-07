@@ -1,21 +1,36 @@
-import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { setIsLoading } from "./isLoading.slice";
+import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import getConfig from '../../utils/getConfig';
+import { setIsLoading } from './isLoading.slice';
 
-export const favoritesSlice = createSlice({
-  name: "favorites",
-  initialState: [],
-  reducers: {}
+export const purchasesSlice = createSlice({
+    name: 'purchases',
+    initialState: [],
+    reducers: {
+        setPurchases: (state, action) => {
+            return action.payload
+        }
+    }
 });
 
-export const getFavoritesThunk = () => (dispatch) => {
-  dispatch(setIsLoading(true));
-  return axios
-    .get("https://news-app-academlo.herokuapp.com/favorites/")
-    .then(() => dispatch(/* action */))
-    .finally(() => dispatch(setIsLoading(false)));
-};
+export const getPurchasesThunk = () => (dispatch) => {
+    dispatch(setIsLoading(true));
+    return axios.get("https://ecommerce-api-react.herokuapp.com/api/v1/purchases/", getConfig())
+        .then(res => {
+            console.log(res.data)
+            dispatch(setPurchases(res.data.data.purchases))
+        })
 
-export const {} = favoritesSlice.actions;
+        .finally(() => dispatch(setIsLoading(false)));
+}
 
-export default favoritesSlice.reducer;
+export const { setPurchases } = purchasesSlice.actions;
+
+export default purchasesSlice.reducer;
+
+
+// despachar thunk en el componente
+//crear  exportar action
+//despachar la acción en el then
+//crear el getConfig, colocar lo del localstorage y exportarlo
+//colocar el getConfig en el axios del thunk

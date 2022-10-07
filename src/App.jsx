@@ -10,6 +10,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import ProductsItems from "./pages/ProductsItems";
 import { useEffect } from "react";
 import { getProductThunk } from "./store/slice/products.slice";
+import { Container } from "react-bootstrap";
 
 
 
@@ -27,17 +28,18 @@ const dispatch = useDispatch();
    <HashRouter>
     <MyNavBar/>
     {isLoading && <IsLoadingScreen />}
+    <Container className="mt-5">
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/productsItems/:id" element={<ProductsItems/>}/>
       <Route path="/login" element={<Login/>}/>
-      <Route path="/purchases" element={<Purchases/>}/>
+      
       
       <Route element={<ProtectedRoutes />}>
-      
+      <Route path="/purchases" element={<Purchases/>}/>
       </Route>
     </Routes>
-   
+    </Container>
    </HashRouter>
   );
 }
